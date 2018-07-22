@@ -1,0 +1,45 @@
+---
+title: "Untitled"
+output: rmarkdown::github_document
+---
+
+##Loading required Libraries
+
+```{r Libraries, message = FALSE, warning=FALSE}
+library(data.table)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(quanteda)
+library(tm)
+library(RColorBrewer)
+library(wordcloud)
+library(openxlsx)
+library(scales)
+```
+
+##Loading the data set
+
+```{r Data set, cache=TRUE}
+data <- read_csv("cc.csv", na = c("NA", "N/A", NULL, ""))
+glimpse(data)
+```
+
+##Cleaning and Munging data
+
+We find that a lot of variables belong to class factor but are in character format and hence, we convert them into factor format.
+
+Also, we need to find out the number of missing values in the data set. We do this with the help of sapply function which throws the number of missing values in each column of our data set
+```{r Munging data}
+sapply(data, function(x) sum(is.na(x)))
+data$company <- as.factor(data$company)
+data$product <- as.factor(data$product)
+data$sub_product <- as.factor(data$sub_product)
+data$issue <- as.factor(data$issue)
+data$company_public_response <- as.factor(data$company_public_response)
+data$state <- as.factor(data$state)
+data$company_response <- as.factor(data$company_response)
+data$consumer_disputed <- as.factor(data$consumer_disputed)
+```
+
+
